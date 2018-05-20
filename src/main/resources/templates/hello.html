@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <title>hello</title>
+    <title>Hello World!</title>
 </head>
 <body>
-hello !!!!
+<h1 th:inline="text">Hello.v.2</h1>
+<p th:text="${value1}"></p>
+<p th:text="${value3}"></p>
+<p th:text="${map.keySet()}"></p>
+<p th:text="${map.entrySet()}"></p>
+<div th:each="m:${map}" th:inline="text">
+    <p>[[${m.key}]]:[[${m.value}]]</p>
+</div>
+<p th:text="${user.name}"></p>
+<p th:text="${colors.toString()}"></p>
+
 </body>
 </html>
