@@ -1,6 +1,10 @@
 package com.durandal.QASystem.controller;
 
+import com.durandal.QASystem.model.Question;
 import com.durandal.QASystem.model.User;
+import com.durandal.QASystem.model.ViewObject;
+import com.durandal.QASystem.service.QuestionService;
+import com.durandal.QASystem.service.UserService;
 import com.durandal.QASystem.service.WendaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +29,23 @@ public class IndexController {
 
     @Autowired
     WendaService wendaService;
+    @Autowired
+    QuestionService questionService;
+
+    @Autowired
+    UserService userService;
+
+    private List<ViewObject> getQuestions(int userId, int offset, int limit) {
+        List<Question> questionList = questionService.getLatestQuestions(userId, offset, limit);
+        List<ViewObject> vos = new ArrayList<>();
+        for (Question question : questionList) {
+            ViewObject vo = new ViewObject();
+            vo.set("question", question);
+            vo.set("user", userService.getUser(question.getUserId()));
+            vos.add(vo);
+        }
+        return vos;
+    }
 
     @RequestMapping(path = {"/index", "/"})
     @ResponseBody
@@ -54,6 +75,7 @@ public class IndexController {
         }
         model.addAttribute("map", map);
         model.addAttribute("user", new User("LEE"));
+        model.addAttribute("vos", getQuestions(0, 0, 10));
         return "hello";
     }
 

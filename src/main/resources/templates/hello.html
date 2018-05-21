@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Hello World!</title>
-</head>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header::head"></th:block>
 <body>
+<th:block th:include="header::header"></th:block>
+<div>
 <h1 th:inline="text">Hello.v.2</h1>
 <p th:text="${value1}"></p>
 <p th:text="${value3}"></p>
@@ -15,6 +15,9 @@
 </div>
 <p th:text="${user.name}"></p>
 <p th:text="${colors.toString()}"></p>
-
+    <div th:each="vo:${vos}" th:inline="text">
+        <p>[[${vo.get("question")}]]:[[${vo.get("user")}]]</p>
+    </div>
+</div>
 </body>
 </html>
