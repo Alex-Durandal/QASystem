@@ -54,13 +54,12 @@ public class IndexController {
         return wendaService.getMessage(2) + "Hello user 2" + httpSession.getAttribute("msg");
     }
 
-    @RequestMapping(path = {"/profile/{groupId}/{userId}"})
+    @RequestMapping(path = {"/profile/{userId}"})
     @ResponseBody
     public String profile(@PathVariable("userId") int userId,
-                          @PathVariable("groupId") int groupId,
                           @RequestParam(value = "type", defaultValue = "1") int type,
                           @RequestParam(value = "key", required = false) String key) {
-        return String.format("Profile Page of %s / %d, t:%d k:%s", groupId, userId, type, key);
+        return String.format("Profile Page of %d, t:%d k:%s", userId, type, key);
     }
 
     @RequestMapping(path = {"/template"}, method = {RequestMethod.GET})
@@ -124,7 +123,7 @@ public class IndexController {
         throw  new IllegalArgumentException("参数不对");
     }
 
-    @ExceptionHandler()
+    @ExceptionHandler
     @ResponseBody
     public String error(Exception e) {
         return "error:" + e.getMessage();
